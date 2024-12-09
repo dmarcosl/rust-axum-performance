@@ -1,0 +1,16 @@
+[package]
+name = "rust-axum-performance"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7.9"
+tokio = { version = "1.42.0", features = ["full"] }
+serde = { version = "1.0.215", features = ["derive"] }
+serde_derive = "1.0"
+sqlx = { version = "0.6.3", features = ["runtime-tokio-native-tls", "sqlite"] }
+axum-response-cache = "0.1.1"
+dotenv = "0.15.0"
+
+[features]
+sqlx_macros = ["sqlx/macros"]
