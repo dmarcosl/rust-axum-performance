@@ -27,9 +27,8 @@ impl ModelRepository for ModelRepositoryImpl {
         // let model: Model = Model::from(domain);
 
         let result = query!(
-            "INSERT INTO models (item_id, name, description, price, quantity, stock, category, url, image_url, is_active)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-             model.item_id,
+            "INSERT INTO models (name, description, price, quantity, stock, category, url, image_url, is_active)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
              model.name,
              model.description,
              model.price,
@@ -61,7 +60,7 @@ impl ModelRepository for ModelRepositoryImpl {
             item_id: row.item_id,
             name: row.name,
             description: row.description,
-            price: row.price as u32,
+            price: row.price as f32,
             quantity: row.quantity,
             stock: row.stock,
             category: row.category,
@@ -88,7 +87,7 @@ impl ModelRepository for ModelRepositoryImpl {
                     item_id: r.item_id,
                     name: r.name,
                     description: r.description,
-                    price: r.price as u32,
+                    price: r.price as f32,
                     quantity: r.quantity,
                     stock: r.stock,
                     category: r.category,

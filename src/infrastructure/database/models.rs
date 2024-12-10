@@ -6,7 +6,7 @@ pub struct Model {
     pub item_id: i64,
     pub name: String,
     pub description: String,
-    pub price: u32,
+    pub price: f32,
     pub quantity: i64,
     pub stock: i64,
     pub category: String,

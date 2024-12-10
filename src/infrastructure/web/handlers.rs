@@ -1,6 +1,6 @@
 use crate::application::use_case::UseCase;
 use crate::domain::services::Service;
-use crate::infrastructure::web::dtos::Dto;
+use crate::infrastructure::web::dtos::{Dto, DtoPost};
 use axum::extract::State;
 use axum::{
     extract::{Json, Path},
@@ -10,9 +10,13 @@ use axum::{
 use axum_response_cache::CacheLayer;
 use std::sync::Arc;
 
+async fn health_handler() -> Json<String> {
+    Json("OK".to_string())
+}
+
 pub async fn post_item_handler(
     State(use_case): State<Arc<UseCase>>,
-    Json(body): Json<Dto>,
+    Json(body): Json<DtoPost>,
 ) -> Json<Dto> {
     let domain = body.into();
     let result = use_case.post_item(domain).await;
@@ -37,15 +41,9 @@ async fn get_items_handler(State(use_case): State<Arc<UseCase>>) -> Json<Vec<Dto
     )
 }
 
-async fn hello_handler() -> Json<String> {
-    let response = "¡Hola, mundo!".to_string();
-    Json(response)
-}
-// async fn get_users(State(db): State<SqlitePool>) -> Json<Vec<UserResponse>> {
-
 pub fn routes(use_case: UseCase) -> Router {
     Router::new()
-        .route("/hello", get(hello_handler))
+        .route("/health", get(health_handler))
         .route("/post-item", post(post_item_handler))
         .route("/get-item/:item_id", get(get_item_handler))
         .route("/get-item-list", get(get_items_handler))
