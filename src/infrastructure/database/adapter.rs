@@ -75,7 +75,8 @@ impl ModelRepository for ModelRepositoryImpl {
     async fn find_all_items(&self) -> Result<Vec<Domain>, sqlx::Error> {
         let rows = query!(
             "SELECT item_id, name, description, price, quantity, stock, category, url, image_url, is_active
-            FROM models"
+            FROM models
+            LIMIT 10000"
         )
             .fetch_all(&self.pool)
             .await?;
